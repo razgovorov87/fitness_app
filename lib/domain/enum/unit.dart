@@ -1,0 +1,4 @@
+enum Unit {
+  kg,
+  lbs,
+}
