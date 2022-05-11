@@ -245,9 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomInteractiveWidget(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: () {},
               child: const Icon(
                 FontAwesome5.arrow_left,
                 color: Colors.white,

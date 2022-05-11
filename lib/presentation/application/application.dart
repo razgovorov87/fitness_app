@@ -1,4 +1,4 @@
-import 'package:fitness_app/presentation/authorization/authorization_page.dart';
+import 'package:fitness_app/presentation/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class Application extends StatelessWidget {
@@ -9,7 +9,7 @@ class Application extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: const AuthorizationPage(),
+      home: const MainScreen(initialRouteIndex: 0),
     );
   }
 }

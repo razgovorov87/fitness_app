@@ -10,6 +10,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  simple_animated_icon: ^1.1.0
   expandable_page_view: ^1.0.13
   fading_edge_scrollview: ^2.0.1
   flutter:
@@ -17,8 +18,8 @@ dependencies:
   flutter_svg: ^1.0.3
   fluttericon: ^2.0.0
   google_fonts: ^2.3.1
-  salomon_bottom_bar: ^3.3.0
   scrollable_positioned_list: ^0.2.3
+  simple_speed_dial: ^0.1.6
   syncfusion_flutter_charts: ^20.1.51
   wheel_chooser: ^1.0.0
 

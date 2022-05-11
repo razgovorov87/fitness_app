@@ -1,8 +1,9 @@
 import 'package:fitness_app/presentation/design/colors.dart';
+import 'package:fitness_app/presentation/design/common/interactive_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final PageController pageController;
@@ -23,81 +24,88 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     return ValueListenableBuilder<int>(
       valueListenable: widget.currentIndexNotifier,
       builder: (context, _selectedIndex, child) => Container(
-        margin: const EdgeInsets.only(left: 24, right: 24, bottom: 15),
+        height: 70,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          color: CustomColors.newDarkBackground,
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey.withOpacity(0.2),
+            ),
+          ),
         ),
-        child: SalomonBottomBar(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          itemPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          selectedColorOpacity: 0,
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            widget.pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          },
-          items: [
-            SalomonBottomBarItem(
-              icon: SvgPicture.asset('assets/icons/home.svg'),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/home.svg',
-                color: CustomColors.primary,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(
-                  'Home'.toUpperCase(),
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _menuItem(
+              icon: Typicons.home,
+              label: 'Home',
+              isSelect: _selectedIndex == 0,
+              index: 0,
             ),
-            SalomonBottomBarItem(
-              icon: SvgPicture.asset('assets/icons/gym.svg'),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/gym.svg',
-                color: CustomColors.primary,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(
-                  'Workout'.toUpperCase(),
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ),
+            _menuItem(
+              icon: FontAwesome5.search,
+              label: 'Search',
+              isSelect: _selectedIndex == 1,
+              index: 1,
             ),
-            SalomonBottomBarItem(
-              icon: SvgPicture.asset('assets/icons/cog.svg'),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/cog.svg',
-                color: CustomColors.primary,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(
-                  'Settings'.toUpperCase(),
-                  style: GoogleFonts.dmSans(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ),
+            const SizedBox(width: 70),
+            _menuItem(
+              icon: FontAwesome5.bell,
+              label: 'Notification',
+              isSelect: _selectedIndex == 2,
+              index: 2,
+            ),
+            _menuItem(
+              icon: Typicons.user,
+              label: 'Profile',
+              isSelect: _selectedIndex == 3,
+              index: 3,
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget _menuItem({
+    required IconData icon,
+    required String label,
+    required bool isSelect,
+    required int index,
+  }) =>
+      Expanded(
+        child: CustomInteractiveWidget(
+          onTap: () {
+            widget.pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+            );
+            widget.currentIndexNotifier.value = index;
+          },
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: Column(
+              key: ValueKey(isSelect),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: 20,
+                  color: isSelect ? CustomColors.primary : Colors.white.withOpacity(0.5),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  label,
+                  style: GoogleFonts.quicksand(
+                    color: isSelect ? CustomColors.primary : Colors.white.withOpacity(0.5),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 }
